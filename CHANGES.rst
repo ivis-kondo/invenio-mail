@@ -7,6 +7,10 @@
 
 Changes
 =======
+Version 1.0.2 (released 2018-12-05)
+
+- Fixes issue with passing None context value to the e-mail template
+
 
 Version 1.0.1 (released 2018-04-12)
 
