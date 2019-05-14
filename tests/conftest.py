@@ -34,7 +34,6 @@ def email_task_app(request):
         CELERY_RESULT_BACKEND='cache',
         CELERY_CACHE_BACKEND='memory',
         CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
-        CELERY_TASK_SERIALIZER='pickle',
         MAIL_SUPPRESS_SEND=True
     )
     FlaskCeleryExt(app)

@@ -57,32 +57,6 @@ def test_send_message_stream(email_task_app):
             assert result_stream.getvalue().find('Subject: Test2') != -1
 
 
-def test_send_message_with_attachments(email_task_app):
-    """Test sending a message with attachments."""
-    with email_task_app.app_context():
-        filename = pkg_resources.resource_filename(
-            __name__, os.path.join('attachments', 'invenio.svg'))
-        content_type = 'image/svg+xml'
-        data = pkg_resources.resource_string(
-            __name__, os.path.join('attachments', 'invenio.svg'))
-
-        attachments = [Attachment(filename, content_type, data)]
-        msg = {
-            'subject': 'Test3',
-            'sender': 'test3@test3.test3',
-            'recipients': ['test3@test3.test3'],
-            'attachments': attachments
-        }
-
-        send_email.delay(msg)
-
-        result_stream = email_task_app.extensions['invenio-mail'].stream
-        assert result_stream.getvalue().find(
-            'Content-Transfer-Encoding: base64') != -1
-        assert result_stream.getvalue().find(
-            'Content-Disposition: attachment;') != -1
-
-
 def test_send_message_with_date(email_task_app):
     """Test sending a message with a date."""
     with email_task_app.app_context():

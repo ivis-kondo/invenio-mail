@@ -21,9 +21,12 @@ def send_email(data):
 
     .. warning::
 
-       Due to an incompatibility between MessagePack serialization and Message,
-       support for attachments and dates is limited. Consult the tests for
-       details.
+       Attachments do not work with Celery tasks since
+       :class:`flask_mail.Attachment` is not serializable in ``JSON``
+       nor ``msgpack``. Note that a
+       `custom serializer <http://docs.celeryproject.org/en/latest/
+       userguide/calling.html#serializers>`__
+       can be created if attachments are really needed.
     """
     msg = Message()
     msg.__dict__.update(data)
