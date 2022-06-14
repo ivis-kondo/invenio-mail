@@ -30,4 +30,4 @@ def send_email(data):
     """
     msg = Message()
     msg.__dict__.update(data)
-    current_app.extensions['mail'].send(msg)
+    current_app.extensions["mail"].send(msg)

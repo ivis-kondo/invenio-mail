@@ -22,19 +22,17 @@ from six import StringIO
 from invenio_mail import InvenioMail, config
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def email_task_app(request):
     """Flask application fixture."""
-    app = Flask('testapp')
+    app = Flask("testapp")
     app.config.update(
-        SQLALCHEMY_DATABASE_URI=os.environ.get(
-            'SQLALCHEMY_DATABASE_URI', 'sqlite://'
-        ),
+        SQLALCHEMY_DATABASE_URI=os.environ.get("SQLALCHEMY_DATABASE_URI", "sqlite://"),
         CELERY_ALWAYS_EAGER=True,
-        CELERY_RESULT_BACKEND='cache',
-        CELERY_CACHE_BACKEND='memory',
+        CELERY_RESULT_BACKEND="cache",
+        CELERY_CACHE_BACKEND="memory",
         CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
-        MAIL_SUPPRESS_SEND=True
+        MAIL_SUPPRESS_SEND=True,
     )
     FlaskCeleryExt(app)
 
@@ -43,11 +41,11 @@ def email_task_app(request):
     return app
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def email_api_app(email_task_app):
     """Flask application fixture."""
     email_task_app.register_blueprint(
-        Blueprint('invenio_mail', __name__, template_folder='templates')
+        Blueprint("invenio_mail", __name__, template_folder="templates")
     )
 
     return email_task_app
@@ -57,18 +55,18 @@ def email_api_app(email_task_app):
 def email_params():
     """Email parameters fixture."""
     return {
-        'subject': 'subject',
-        'recipients': ['recipient@inveniosoftware.com'],
-        'sender': 'sender@inveniosoftware.com',
-        'cc': 'cc@inveniosoftware.com',
-        'bcc': 'bcc@inveniosoftware.com',
-        'reply_to': 'reply_to@inveniosoftware.com',
-        'date': datetime.now(),
-        'attachments': [],
-        'charset': None,
-        'extra_headers': None,
-        'mail_options': [],
-        'rcpt_options': [],
+        "subject": "subject",
+        "recipients": ["recipient@inveniosoftware.com"],
+        "sender": "sender@inveniosoftware.com",
+        "cc": "cc@inveniosoftware.com",
+        "bcc": "bcc@inveniosoftware.com",
+        "reply_to": "reply_to@inveniosoftware.com",
+        "date": datetime.now(),
+        "attachments": [],
+        "charset": None,
+        "extra_headers": None,
+        "mail_options": [],
+        "rcpt_options": [],
     }
 
 
@@ -76,7 +74,7 @@ def email_params():
 def email_ctx():
     """Email context fixture."""
     return {
-        'user': 'User',
-        'content': 'This a content.',
-        'sender': 'sender',
+        "user": "User",
+        "content": "This a content.",
+        "sender": "sender",
     }

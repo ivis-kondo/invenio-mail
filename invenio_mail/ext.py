@@ -25,10 +25,9 @@ def print_email(message, app):
     :param message: Message object.
     :param app: Flask application object.
     """
-    invenio_mail = app.extensions['invenio-mail']
+    invenio_mail = app.extensions["invenio-mail"]
     with invenio_mail._lock:
-        invenio_mail.stream.write(
-            '{0}\n{1}\n'.format(message.as_string(), '-' * 79))
+        invenio_mail.stream.write("{0}\n{1}\n".format(message.as_string(), "-" * 79))
         invenio_mail.stream.flush()
 
 
@@ -63,11 +62,11 @@ class InvenioMail(object):
         :param app: Flask application object.
         """
         self.init_config(app)
-        if 'mail' not in app.extensions:
+        if "mail" not in app.extensions:
             Mail(app)
-        if app.config.get('MAIL_SUPPRESS_SEND', False) or app.debug:
+        if app.config.get("MAIL_SUPPRESS_SEND", False) or app.debug:
             email_dispatched.connect(print_email)
-        app.extensions['invenio-mail'] = self
+        app.extensions["invenio-mail"] = self
 
     @staticmethod
     def init_config(app):
@@ -75,5 +74,5 @@ class InvenioMail(object):
 
         :param app: Flask application object.
         """
-        app.config.setdefault('MAIL_DEBUG', app.debug)
-        app.config.setdefault('MAIL_SUPPRESS_SEND', app.debug or app.testing)
+        app.config.setdefault("MAIL_DEBUG", app.debug)
+        app.config.setdefault("MAIL_SUPPRESS_SEND", app.debug or app.testing)

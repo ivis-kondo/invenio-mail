@@ -102,6 +102,6 @@ from __future__ import absolute_import, print_function
 
 from .ext import InvenioMail
 
-__version__ = '1.0.2'
+__version__ = "1.0.2"
 
-__all__ = ('__version__', 'InvenioMail')
+__all__ = ("__version__", "InvenioMail")
