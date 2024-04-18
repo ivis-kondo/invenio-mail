@@ -16,13 +16,15 @@ readme = open('README.rst').read()
 history = open('CHANGES.rst').read()
 
 tests_require = [
-    'check-manifest>=0.25',
-    'coverage>=4.0',
-    'isort>=4.2.2',
-    'pydocstyle>=1.0.0',
-    'pytest-cov>=1.8.0',
-    'pytest-pep8>=1.0.6',
-    'pytest>=2.8.0',
+    'coverage>=4.5.3,<5.0.0',
+    'mock>=3.0.0,<4.0.0',
+    'pytest>=4.6.4,<5.0.0',
+    'pytest-cache',
+    'pytest-cov',
+    'pytest-pep8',
+    'pytest-invenio',
+    'pytest-mock==3.1.0',
+    'responses',
 ]
 
 extras_require = {
@@ -41,12 +43,15 @@ for reqs in extras_require.values():
     extras_require['all'].extend(reqs)
 
 setup_requires = [
-    'pytest-runner>=2.6.2',
+    'Babel>=1.3',
+    'pytest-runner>=3.0.0,<5',
 ]
 
 install_requires = [
     'Flask>=0.11.1',
     'Flask-Mail>=0.9.1',
+    'invenio-db>=1.0.0b9',
+    'invenio-admin>=1.0.0b4'
 ]
 
 packages = find_packages()
@@ -78,8 +83,20 @@ setup(
         'invenio_base.api_apps': [
             'invenio_mail = invenio_mail:InvenioMail',
         ],
+        'invenio_admin.views': [
+            'invenio_mail = invenio_mail.admin:mail_adminview',
+        ],
+        'invenio_db.models': [
+            'invenio_mail = invenio_mail.models',
+        ],
+        'invenio_db.alembic': [
+            'invenio_mail = invenio_mail:alembic',
+        ],
         'invenio_celery.tasks': [
             'invenio_mail = invenio_mail.tasks',
+        ],
+        'invenio_i18n.translations': [
+            'messages = invenio_mail',
         ]
     },
     extras_require=extras_require,
